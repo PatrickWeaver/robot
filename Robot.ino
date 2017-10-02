@@ -17,19 +17,14 @@
 
  */
 
-int u = 4;
-int l = 1;
-int r = 2;
-int d = 3;
 
+int lR = 9;    // LED connected to digital pin 9
+int lG = 10;
+int lB = 11;
 
-int leftRed = 9;    // LED connected to digital pin 9
-int leftGreen = 10;
-int leftBlue = 11;
-
-int rightRed = 6;
-int rightGreen = 5;
-int rightBlue = 3;
+int rR = 3;
+int rG = 5;
+int rB = 6;
 
 int dir;
 int dt = 4000;
@@ -38,121 +33,57 @@ void setup() {
   // nothing happens in setup
   pinMode(1, OUTPUT);
   pinMode(2, OUTPUT);
-  pinMode(3, OUTPUT);
+  pinMode(rR, OUTPUT); // Pin 3
   pinMode(4, OUTPUT);
-  pinMode(5, OUTPUT);
-  pinMode(6, OUTPUT);
+  pinMode(rG, OUTPUT); // Pin 5
+  pinMode(rB, OUTPUT); // Pin 6
   pinMode(7, OUTPUT);
   pinMode(8, OUTPUT);
-  pinMode(9, OUTPUT);
-  pinMode(10, OUTPUT);
+  pinMode(lR, OUTPUT); // Pin 9
+  pinMode(lG, OUTPUT); // Pin 10
+  pinMode(lB, OUTPUT); // Pin 11
+  pinMode(12, INPUT_PULLUP);
+  pinMode(13, OUTPUT);
+  Serial.begin(9600);
 }
 
 void loop() {
-  digitalWrite(1, HIGH);
-  digitalWrite(3, HIGH);
-  digitalWrite(6, HIGH);
-  digitalWrite(9, HIGH);
-  delay(dt);
-  digitalWrite(1, LOW);
-  digitalWrite(3, LOW);
-  digitalWrite(9, LOW);
+  Serial.println(digitalRead(12));
+  if (digitalRead(12) != 1) {
+    digitalWrite(4, HIGH);
+    digitalWrite(7, HIGH);
+    digitalWrite(rR, HIGH);
+    digitalWrite(rG, HIGH);
+    digitalWrite(lB, HIGH);
+    tone(13, 170, dt);
+    
+    delay(dt);
 
-  digitalWrite(2, HIGH);
-  digitalWrite(10, HIGH);
-  digitalWrite(11, HIGH);
-  delay(dt);
-  digitalWrite(2, LOW);
-  digitalWrite(6, LOW);
-  digitalWrite(10, LOW);
-  digitalWrite(11, LOW);
+    digitalWrite(4, LOW);
+    digitalWrite(7, LOW);
+    digitalWrite(rG, LOW);
+    digitalWrite(lB, LOW);
+  }
   
-  /*
-  // fade in from min to max in increments of 5 points:
-  for (int fadeValue = 0 ; fadeValue <= 255; fadeValue += 5) {
-    // sets the value (range from 0 to 255):
-    analogWrite(leftRed, fadeValue);
-    // wait for 30 milliseconds to see the dimming effect
-    delay(30);
-  }
-    for (int fadeValue = 0 ; fadeValue <= 255; fadeValue += 5) {
-    // sets the value (range from 0 to 255):
-    analogWrite(rightRed, fadeValue);
-    // wait for 30 milliseconds to see the dimming effect
-    delay(30);
-  }
-  for (int fadeValue = 0 ; fadeValue <= 255; fadeValue += 5) {
-    // sets the value (range from 0 to 255):
-    analogWrite(leftGreen, fadeValue);
-    // wait for 30 milliseconds to see the dimming effect
-    delay(30);
-  }
-  for (int fadeValue = 0 ; fadeValue <= 255; fadeValue += 5) {
-    // sets the value (range from 0 to 255):
-    analogWrite(rightGreen, fadeValue);
-    // wait for 30 milliseconds to see the dimming effect
-    delay(30);
-  }
-  for (int fadeValue = 0 ; fadeValue <= 255; fadeValue += 5) {
-    // sets the value (range from 0 to 255):
-    analogWrite(leftBlue, fadeValue);
-    // wait for 30 milliseconds to see the dimming effect
-    delay(30);
-  }
-  for (int fadeValue = 0 ; fadeValue <= 255; fadeValue += 5) {
-    // sets the value (range from 0 to 255):
-    analogWrite(rightBlue, fadeValue);
-    // wait for 30 milliseconds to see the dimming effect
-    delay(30);
+  if (digitalRead(12) != 1){
+    digitalWrite(2, HIGH);
+    digitalWrite(8, HIGH);
+    digitalWrite(lG, HIGH);
+    tone(13, 220, dt);
+    
+    delay(dt);
+    
+    digitalWrite(2, LOW);
+    digitalWrite(8, LOW);
+    digitalWrite(rR, LOW);
+    digitalWrite(lG, LOW);
   }
 
-  // fade out from max to min in increments of 5 points:
-  for (int fadeValue = 255 ; fadeValue >= 0; fadeValue -= 5) {
-    // sets the value (range from 0 to 255):
-    analogWrite(leftGreen, fadeValue);
-    // wait for 30 milliseconds to see the dimming effect
-    delay(30);
+  for (int i= 0; i < 12; i++) {
+    digitalWrite(i, LOW);
   }
-  for (int fadeValue = 255 ; fadeValue >= 0; fadeValue -= 5) {
-    // sets the value (range from 0 to 255):
-    analogWrite(rightGreen, fadeValue);
-    // wait for 30 milliseconds to see the dimming effect
-    delay(30);
-  }
-  for (int fadeValue = 255 ; fadeValue >= 0; fadeValue -= 5) {
-    // sets the value (range from 0 to 255):
-    analogWrite(leftRed, fadeValue);
-    // wait for 30 milliseconds to see the dimming effect
-    delay(30);
-  }
-  for (int fadeValue = 255 ; fadeValue >= 0; fadeValue -= 5) {
-    // sets the value (range from 0 to 255):
-    analogWrite(rightRed, fadeValue);
-    // wait for 30 milliseconds to see the dimming effect
-    delay(30);
-  }
-  for (int fadeValue = 255 ; fadeValue >= 0; fadeValue -= 5) {
-    // sets the value (range from 0 to 255):
-    analogWrite(leftBlue, fadeValue);
-    // wait for 30 milliseconds to see the dimming effect
-    delay(30);
-  }
-  for (int fadeValue = 255 ; fadeValue >= 0; fadeValue -= 5) {
-    // sets the value (range from 0 to 255):
-    analogWrite(rightBlue, fadeValue);
-    // wait for 30 milliseconds to see the dimming effect
-    delay(30);
-  }
-  */
-  /*
-  delay(100);
-  digitalWrite(dir, LOW);
-  dir += 1;
-  if (dir > 4) {
-    dir = 1;
-  }
-  */
 
+  delay(50);
 }
 
 
